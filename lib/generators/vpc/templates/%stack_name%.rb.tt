@@ -1,0 +1,7 @@
+description 'vpc stack'
+
+include_template(
+  '<%= stack_name %>/vpc.rb',
+  '<%= stack_name %>/subnets.rb',
+  '<%= stack_name %>/endpoints.rb',
+)

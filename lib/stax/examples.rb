@@ -1,7 +1,4 @@
-require "stax/examples/version"
+require 'stax/examples/version'
 
-module Stax
-  module Examples
-    # Your code goes here...
-  end
-end
+## auto require generators
+Dir[File.join(__dir__, '..', 'generators', '**', '*_generator.rb')].map(&method(:require))
