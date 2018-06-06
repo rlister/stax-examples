@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/rlister/stax-examples'
   spec.license       = 'MIT'
 
-  spec.files = Dir["{lib}/**/*", "[A-Z]*]
+  spec.files = Dir["{lib}/**/*", "[A-Z]*"]
   spec.require_paths = ['lib']
 
   spec.add_development_dependency "bundler", "~> 1.16"
