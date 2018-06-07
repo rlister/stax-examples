@@ -54,22 +54,6 @@ module Stax
         "#{basename} generate #{command_name} TABLENAME"
       end
 
-      # see https://www.rubydoc.info/github/wycats/thor/Thor/Actions for methods
-
-      # def create_file
-      #   create_file(filename) do
-      #     content
-      #   end
-      # end
-
-      # def create_template
-      #   template(src, dest)
-      # end
-
-      # def create_dir
-      #   empty_directory(path)
-      # end
-
     end
   end
 end
