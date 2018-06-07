@@ -1,0 +1,31 @@
+resource :EcsTask, 'AWS::ECS::TaskDefinition', DependsOn: [:IamRoleExec, :IamRoleTask, :LogGroup] do
+  cpu 512 # 256 512 1024 2048 4096
+  memory '1GB' # 2-8 times cpu
+  requires_compatibilities [:FARGATE]
+  execution_role_arn Fn::get_att(:IamRoleExec, :Arn)
+  task_role_arn Fn::get_att(:IamRoleTask, :Arn)
+  network_mode :awsvpc
+  container_definitions [
+    {
+      Name: :app,
+      Image: Fn::sub('${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/app:latest'), # FIXME
+      MemoryReservation: 512,
+      # Environment: [
+      # { Name: :STACK_NAME, Value: Fn::ref('AWS::StackName') },
+      # ],
+      PortMappings: [
+        { ContainerPort: 3000 }
+      ],
+      LogConfiguration: {
+        LogDriver: :awslogs,
+        Options: {
+          'awslogs-group'         => Fn::ref(:LogGroup),
+          'awslogs-region'        => Fn::ref('AWS::Region'),
+          'awslogs-stream-prefix' => Fn::ref('AWS::StackName'),
+        }
+      }
+    }
+  ]
+end
+
+output :EcsTask, Fn::ref(:EcsTask)

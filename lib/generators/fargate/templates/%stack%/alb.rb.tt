@@ -1,0 +1,59 @@
+resource :Alb, 'AWS::ElasticLoadBalancingV2::LoadBalancer', DependsOn: [:SgAlb, :SgWeb] do
+  subnets Fn::split(',', Fn::import_value(Fn::sub('${<%= vpc %>}-<%= subnetids %>')))
+  security_groups [
+    Fn::ref(:SgAlb),
+    Fn::ref(:SgWeb),
+  ]
+  tag :Name, Fn::ref('AWS::StackName')
+end
+
+resource :AlbTg, 'AWS::ElasticLoadBalancingV2::TargetGroup', DependsOn: :Alb do
+  port 3000                     # container port to connect
+  protocol :HTTP
+  health_check_path '/status'
+  health_check_port 'traffic-port'
+  health_check_protocol :HTTP
+  health_check_interval_seconds 15
+  health_check_timeout_seconds 5
+  healthy_threshold_count 2
+  unhealthy_threshold_count 2
+  target_group_attributes [
+    { Key: 'deregistration_delay.timeout_seconds', Value: 10 }
+  ]
+  vpc_id Fn::import_value(Fn::sub('${<%= vpc %>}-<%= vpcid %>'))
+  target_type :ip
+end
+
+## listen to HTTP on port 80
+resource :Alb80, 'AWS::ElasticLoadBalancingV2::Listener', DependsOn: [:Alb, :AlbTg] do
+  load_balancer_arn Fn::ref(:Alb)
+  port 80
+  protocol :HTTP
+  default_actions [ {Type: :forward, TargetGroupArn: Fn::ref(:AlbTg)} ]
+end
+
+## listen to HTTPS on port 443
+# resource :Alb443, 'AWS::ElasticLoadBalancingV2::Listener', DependsOn: [:Alb, :AlbTg] do
+#   load_balancer_arn Fn::ref(:Alb)
+#   port 443
+#   protocol :HTTPS
+#   ## default cert for requests
+#   certificates [
+#     { CertificateArn: Fn::sub('arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/FIXME') }
+#   ]
+#   ssl_policy 'ELBSecurityPolicy-TLS-1-2-2017-01'
+#   default_actions [ {Type: :forward, TargetGroupArn: Fn::ref(:AlbTg)} ]
+# end
+
+## add extra certs
+# resource :AlbCert, 'AWS::ElasticLoadBalancingV2::ListenerCertificate', DependsOn: :Alb443 do
+#   listener_arn Fn::ref(:Alb443)
+#   certificates [
+#     { CertificateArn: Fn::sub('arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/FIXME') }
+#   ]
+# end
+
+output :AlbArn,        Fn::ref(:Alb), export: Fn::sub('${AWS::StackName}-AlbArn')
+output :AlbName,       Fn::get_att(:Alb, :LoadBalancerName)
+output :AlbDnsName,    Fn::get_att(:Alb, :DNSName)
+output :AlbHostedZone, Fn::get_att(:Alb, :CanonicalHostedZoneID)

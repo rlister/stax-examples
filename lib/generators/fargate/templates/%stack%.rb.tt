@@ -1,0 +1,19 @@
+description 'fargate stack'
+
+## VPC stack
+parameter :vpc, type: :String
+
+## DNS domain for route53
+# parameter :domain, type: :String, default: 'example.com'
+
+include_template(
+  '<%= stack %>/iam_role_exec.rb',
+  '<%= stack %>/iam_role_task.rb',
+  '<%= stack %>/log_group.rb',
+  '<%= stack %>/security_groups.rb',
+  '<%= stack %>/alb.rb',
+  '<%= stack %>/ecs_cluster.rb',
+  '<%= stack %>/ecs_task.rb',
+  '<%= stack %>/ecs_service.rb',
+  '<%= stack %>/route53.rb',
+)

@@ -1,0 +1,16 @@
+# resource :R53, 'AWS::Route53::RecordSetGroup' do
+#   hosted_zone_name Fn::sub('${domain}.')
+#   comment Fn::ref('AWS::StackName')
+#   record_sets [
+#     {
+#       Name: Fn::sub('${AWS::StackName}.${domain}'),
+#       Type: :A,
+#       AliasTarget: {
+#         HostedZoneId: Fn::get_att(:Alb, :CanonicalHostedZoneID),
+#         DNSName:      Fn::get_att(:Alb, :DNSName),
+#       }
+#     }
+#   ]
+# end
+
+# output :DnsRecord, Fn::sub('${AWS::StackName}.${domain}')
