@@ -1,7 +1,7 @@
 module Stax
   module Generators
     class DynamoGenerator < Base
-      desc 'dynamo generator.'
+      desc 'Add dynamo table to new or existing stack'
 
       class_option :stack, type: :string, default: nil, desc: 'stack to install table'
 
