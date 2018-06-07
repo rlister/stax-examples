@@ -1,0 +1,41 @@
+resource :<%= id %>, 'AWS::DynamoDB::Table' do
+  attribute_definitions [
+    <%- attributes.each do |a| -%>
+    { AttributeName: :<%= a[0].to_sym %>, AttributeType: :<%= a[1].upcase.to_sym %> },
+    <%- end -%>
+  ]
+  key_schema [
+    { AttributeName: :<%= hash %>, KeyType: :HASH },
+    { AttributeName: :<%= range %>, KeyType: :RANGE },
+  ]
+  # global_secondary_indexes [
+  #   {
+  #     IndexName: :by_indexName,
+  #     KeySchema: [
+  #       { AttributeName: :indexName, KeyType: :HASH }
+  #     ],
+  #     Projection: {
+  #       NonKeyAttributes: [ :a, :b ],
+  #       ProjectionType: :INCLUDE,
+  #     },
+  #     ProvisionedThroughput: {
+  #       ReadCapacityUnits: 1,
+  #       WriteCapacityUnits: 1,
+  #     }
+  #   }
+  # ]
+  provisioned_throughput do
+    read_capacity_units 1
+    write_capacity_units 1
+  end
+  # stream_specification do
+  #   stream_view_type :NEW_IMAGE
+  # end
+  SSE_specification(
+    SSEEnabled: true
+  )
+  tag :Stack, Fn::ref('AWS::StackName')
+end
+
+output :<%= id %>,    Fn::ref(:<%= id %>),           export: Fn::sub('${AWS::StackName}-<%= id %>')
+output :<%= id %>Arn, Fn::get_att(:<%= id %>, :Arn), export: Fn::sub('${AWS::StackName}-<%= id %>Arn')
