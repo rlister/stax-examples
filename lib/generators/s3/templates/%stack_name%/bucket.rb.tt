@@ -1,0 +1,15 @@
+resource :bucket, 'AWS::S3::Bucket' do
+  BucketEncryption(
+    ServerSideEncryptionConfiguration do
+      [
+        ServerSideEncryptionByDefault(
+          SSEAlgorithm: AES256
+        )
+      ]
+    end
+  )
+
+  <%- if bucket_name -%>
+  BucketName bucket_name
+  <%- end -%>
+end
