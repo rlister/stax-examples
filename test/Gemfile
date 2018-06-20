@@ -3,3 +3,7 @@ source 'https://rubygems.org'
 gem 'docile', '~> 1.2.0'
 gem 'stax-examples', path: '../'
 gem 'stax'
+
+group :development, :test do
+  gem 'pry-byebug', require: true
+end

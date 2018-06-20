@@ -10,10 +10,6 @@ module Stax
 
       attr_accessor :stack, :bucket_name
 
-      def add_to_staxfile
-        append_to_file 'Staxfile', "stack :#{stack}\n"
-      end
-
       def check_args
         usage! unless args.empty?
       end
@@ -21,6 +17,10 @@ module Stax
       def ask_for_options
         @stack       = options[:stack] || ask('stack to use or create?', default: 's3')
         @bucket_name = options[:bucket_name]
+      end
+
+      def add_to_staxfile
+        append_to_file 'Staxfile', "stack: #{stack}\n"
       end
 
       def add_templates
