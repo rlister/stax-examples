@@ -20,7 +20,7 @@ module Stax
       end
 
       def add_to_staxfile
-        append_to_file 'Staxfile', "stack: #{stack}\n"
+        append_to_file 'Staxfile', "stack :#{stack}\n"
       end
 
       def add_templates
