@@ -53,7 +53,6 @@ You should now see your new generators listed:
 
 ```sh
 $ bundle exec stax g
-
 ```
 
 Use a generator by name to create your new boilerplate in `lib/` and
@@ -81,6 +80,19 @@ https://github.com/rlister/stax-examples. This project is intended
 to be a safe, welcoming space for collaboration, and contributors are
 expected to adhere to the [Contributor
 Covenant](http://contributor-covenant.org) code of conduct.
+
+### How to create a new a generator?
+
+For creating a new generator, you can use `stax generate genator NAME`, where `NAME` is your new generator name, i.e. `apigw` for API Gateway.
+
+Then for testing it your brand new generator:
+
+```shell
+cd stax-examples/test
+
+bundle install
+bundle exec stax generate NAME
+```
 
 ## License
 
