@@ -4,7 +4,7 @@ module Stax
       desc 'Create basic S3 bucket'
 
       class_option :stack, type: :string, default: nil, desc: 'stack to install'
-      class_option :bucket_name, type: :string, default: nil, desc: 'bucket_name'
+      class_option :bucket_name, type: :string, default: nil, desc: 'bucket name'
 
       source_root File.expand_path('templates', __dir__)
 
