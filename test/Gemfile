@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gem 'docile', '~> 1.2.0'
+gem 'stax-examples', path: '../'
+gem 'stax'

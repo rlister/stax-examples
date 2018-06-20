@@ -1,0 +1,2 @@
+require 'stax/examples'
+stack :app, import: :vpc, include: %w[Ecs Alb Logs]
