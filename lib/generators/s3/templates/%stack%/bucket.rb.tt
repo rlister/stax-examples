@@ -1,0 +1,15 @@
+resource :bucket, 'AWS::S3::Bucket' do
+  BucketEncryption do
+    ServerSideEncryptionConfiguration [
+      ServerSideEncryptionByDefault: {
+        SSEAlgorithm: 'AES256'
+      }
+    ]
+  end
+  <%- if bucket_name -%>
+  BucketName '<%= bucket_name %>'
+  <%- end -%>
+end
+
+output :bucket,    Fn::ref(:bucket),           export: Fn::sub('${AWS::StackName}-bucket')
+output :bucketArn, Fn::get_att(:bucket, :Arn), export: Fn::sub('${AWS::StackName}-bucketArn')

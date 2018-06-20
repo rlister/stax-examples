@@ -6,3 +6,6 @@
 /pkg/
 /spec/reports/
 /tmp/
+/test/cf/
+/test/Staxfile
+Gemfile.lock

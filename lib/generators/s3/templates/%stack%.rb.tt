@@ -1,0 +1,6 @@
+description '<%= stack %> stack'
+
+include_template(
+  '<%= stack %>/bucket.rb',
+  '<%= stack %>/iam_s3.rb'
+)
