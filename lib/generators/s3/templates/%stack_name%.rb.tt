@@ -1,5 +1,0 @@
-description '<%= stack_name %> stack'
-
-include_template(
-  '<%= stack_name %>/bucket.rb'
-)
