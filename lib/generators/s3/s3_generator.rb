@@ -15,7 +15,7 @@ module Stax
       end
 
       def ask_for_options
-        @stack       = options[:stack] || ask('stack to use or create?', default: 's3')
+        @stack       = options[:stack] || ask('stack to use or create?', default: 'bucket')
         @bucket_name = options[:bucket_name]
       end
 
