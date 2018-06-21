@@ -6,7 +6,9 @@ resource :<%= id %>, 'AWS::DynamoDB::Table' do
   ]
   key_schema [
     { AttributeName: :<%= hash %>, KeyType: :HASH },
-    { AttributeName: :<%= range %>, KeyType: :RANGE },
+    <%- if range.present? -%>
+    { AttributeName: :;'<%= range %>', KeyType: :RANGE },
+    <%- end -%>
   ]
   # global_secondary_indexes [
   #   {
