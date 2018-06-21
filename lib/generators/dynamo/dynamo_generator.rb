@@ -27,11 +27,13 @@ module Stax
           type = ask('attribute type?', default: 'S')
           @attributes << [name, type]
         end
+
+        abort('Minimum 1 attribute is required') if @attributes.empty?
       end
 
       def ask_for_key_schema
         @hash  = ask('hash key?',  default: attributes[0].first)
-        @range = ask('range key?', default: attributes[1].first)
+        @range = ask('range key?', default: attributes[1].first) if attributes[1]
       end
 
       def add_to_staxfile
