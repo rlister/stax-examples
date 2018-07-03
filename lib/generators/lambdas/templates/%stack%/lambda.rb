@@ -13,5 +13,5 @@ resource :lambda, 'AWS::Lambda::Function', DependsOn: :iamlambda do
   )
   handler 'index.handler' # needed for inline code
   runtime 'nodejs6.10'
-  role Fn::get_att(:iamlambdarole, :Arn)
+  role Fn::get_att(:iamlambda, :Arn)
 end

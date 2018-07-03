@@ -1,20 +1,20 @@
 module Stax
   module Generators
-    class LambdaGenerator < Base
+    class LambdasGenerator < Base
       desc 'Create basic Lambda'
 
       class_option :stack, type: :string, default: nil, desc: 'stack to install'
 
       source_root File.expand_path('templates', __dir__)
 
-      attr_accessor :stack, :bucket_name
+      attr_accessor :stack
 
       def check_args
         usage! unless args.empty?
       end
 
       def ask_for_options
-        @stack       = options[:stack] || ask('stack to use or create?', default: 'bucket')
+        @stack = options[:stack] || ask('stack to use or create?', default: 'lambdas')
       end
 
       def add_to_staxfile
