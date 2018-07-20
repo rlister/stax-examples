@@ -1,0 +1,6 @@
+description '<%= stack %> stack'
+
+include_template(
+  '<%= stack %>/iam_lambda.rb',
+  '<%= stack %>/lambda.rb'
+)
